@@ -170,5 +170,6 @@ if (pb.IMPOSSIBLE_PLUGBOARD_CONFIGURATION() == 6) {
   };
 
   pb.UPLOAD_TO_OUTPUT_TEXT_FILE(argv[argc - 1]);
+  return 0;
 };
 
