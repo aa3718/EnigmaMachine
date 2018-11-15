@@ -14,7 +14,6 @@ class Enigma {
  public:
   int number_of_rotors;
   int error_code;
-  int location;
   Plugboard pb;
   Reflector rf;
   int ENIGMA_START(int argc, char **argv); 

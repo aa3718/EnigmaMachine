@@ -6,8 +6,8 @@ int Enigma::ENIGMA_START(int argc, char **argv) {
   number_of_rotors = 0;
 
   // Determining the number of rotors based on argc length
-  if (argc >= 6) {
-  number_of_rotors = argc - 6;
+  if (argc > 3) {
+  number_of_rotors = argc - 4;
   } else {
     number_of_rotors = 0;
   };
@@ -15,43 +15,32 @@ int Enigma::ENIGMA_START(int argc, char **argv) {
  // Retutrning error value if there is an issue with plugboard file
  if (pb.UPLOAD_PLUGBOARD(argv[1]) == 4) {
    error_code = 4;
-   location = 0;
     return error_code;
  };
 
  if (pb.IMPOSSIBLE_PLUGBOARD_CONFIGURATION() == 5) {
    error_code = 5;
-   location = 0;
    return error_code;
  };
 
-if (pb.IMPOSSIBLE_PLUGBOARD_CONFIGURATION() == 6) {
+  if (pb.INVALID_INDEX() == 13) {
+   error_code = 13;
+   return error_code;
+ };
+
+if (pb.INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS() == 6) {
    error_code = 6;
-   location = 0;
    return error_code;
  };
 
- if (pb.INVALID_INDEX() == 3) {
-   error_code = 3;
-   location = 0;
-   return error_code;
- };
- 
  
  // Uploading input text file depending on argc length 
- if (number_of_rotors == 0) {
-   if (pb.UPLOAD_VALUE(argv[3]) == 4) {
-     error_code = 4;
-     location = 0;
-   };
- } else {
-   if (pb.UPLOAD_VALUE(argv[number_of_rotors + 4]) == 4) {
-     error_code = 4;
-     location = 0;
-   };
- };
+ pb.UPLOAD_VALUE();
+ cout << pb.input_counter << "input counter value\n";  
 
- cout << pb.input_array[0] << "/n";
+
+ 
+ cout << pb.input_array[0] << "first input number/n";
  
  // Creating new instances of rotors
   auto rotors = new Rotor[number_of_rotors];
@@ -73,10 +62,10 @@ if (pb.IMPOSSIBLE_PLUGBOARD_CONFIGURATION() == 6) {
 	};
 
 	cout << rotors[rot].pass_value << "pass value before pass rotor \n";
-	rotors[rot].UPLOAD_ROTOR_FILE_TO_ARRAY(argv[2 + (number_of_rotors - rot)]);
-	rotors[rot].UPLOAD_ROTOR_POSITION_FILE_TO_ARRAY(argv[number_of_rotors + 3]);
 
 	if (letter == 0) {
+	  rotors[rot].UPLOAD_ROTOR_FILE_TO_ARRAY(argv[2 + (number_of_rotors - rot)]);
+	  rotors[rot].UPLOAD_ROTOR_POSITION_FILE_TO_ARRAY(argv[number_of_rotors + 3]);
 	  rotors[rot].ASSIGN(rot);
 	};
 
@@ -101,19 +90,21 @@ if (pb.IMPOSSIBLE_PLUGBOARD_CONFIGURATION() == 6) {
 
     if (rf.INVALID_REFLECTOR_MAPPING() == 9) {
       error_code = 9;
-      location = 1;
+      return error_code;
+    };
+
+     if (rf.INVALID_REFLECTOR_MAPPING() == 10) {
+      error_code = 10;
       return error_code;
     };
 
     if (rf.INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS() == 8) {
       error_code = 8;
-      location = 1;
       return error_code;
     };
 
-    if (rf.INVALID_INDEX() == 3) {
-      error_code = 3;
-      location = 1;
+    if (rf.INVALID_INDEX() == 12) {
+      error_code = 12;
       return error_code;
     };
 
@@ -170,6 +161,7 @@ if (pb.IMPOSSIBLE_PLUGBOARD_CONFIGURATION() == 6) {
   };
 
   pb.UPLOAD_TO_OUTPUT_TEXT_FILE(argv[argc - 1]);
+
   return 0;
 };
 

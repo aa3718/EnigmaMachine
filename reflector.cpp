@@ -19,8 +19,8 @@ ifstream in_stream;
     Array[rf_counter] = a;
     rf_counter++;
     in_stream >> a;
-  };
-
+  }; 
+  
    if (!in_stream.eof() && !isdigit(a)) {
      //    Value_NNC_rt = "True";
     cout << "There is a character\n";
@@ -77,7 +77,7 @@ int Reflector::INVALID_INDEX() {
 
 for (int i = 0 ; i < rf_counter ; i++) {
   if (Array[i] < 0 || Array[i] > 26) {
-    return 3;
+    return 12;
   };
  };
   return 0;

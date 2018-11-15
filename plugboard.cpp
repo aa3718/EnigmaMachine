@@ -9,7 +9,7 @@ using namespace std;
 int Plugboard::UPLOAD_PLUGBOARD(const char *filename) {
 
  ifstream in_stream;
-  in_stream.open(filename);
+ in_stream.open(filename);
 
   pb_counter = 0;
   int a = 0;
@@ -22,11 +22,10 @@ int Plugboard::UPLOAD_PLUGBOARD(const char *filename) {
     in_stream >> a; 
   };
 
-  if (!in_stream.eof() && !isdigit(a)) {
+  /*  if (!in_stream.eof() && !isdigit(a)) {
     cout << "There is a character\n";
-    error_pb_not_digit_index = pb_counter;
     return 4;
-  };
+    }; */
     
   in_stream.close();
 
@@ -39,7 +38,7 @@ for (int i = 0 ; i < pb_counter ; i++) {
   for (int j = i+1; j < pb_counter ; j++) {
     if (Array[i] == Array[j]) {
       cout << "Error, duplicates present(PB)\n";
-      error_pb_duplicate_index= j;
+      error_index_5= j;
       return 5;
     };
   };
@@ -61,36 +60,38 @@ int Plugboard::INVALID_INDEX() {
   
 for (int i = 0 ; i < pb_counter ; i++) {
   if (Array[i] < 0 || Array[i] > 26) {
-    error_pb_not_number_index = i;
-    return 3;
+    error_index_13 = i;
+    return 13;
   };
  };
   return 0;
 };
 
-int Plugboard::UPLOAD_VALUE(const char *filename) {
-  
-  ifstream in_stream;
-  in_stream.open(filename);
+int Plugboard::UPLOAD_VALUE() {
   
   input_counter = 0;
-  char character = 0;
   int integer = 0;
 
-  in_stream.get(character);
   
-  while (! in_stream.fail()) {
-    if (character<= 90 && character >= 65) {
-      integer = character - 65;
-      input_array[input_counter] = integer;
-      input_counter++;
-    } else {
-      return 4;
-    };
-    in_stream.get(character);
+  while ((integer = cin.get()) !=EOF) {
+    cin >> ws;
+    integer = integer - 65;
+    input_array[input_counter] = integer;
+    input_counter++;
   };
-  in_stream.close();
-  return 0; 
+
+  // input_counter = input_counter - 1;
+  
+  //input_counter = cin.gcount();
+  
+    for (int i = 0 ; i < input_counter ; i++) {
+      cout << input_array[i] << "\n";
+    }; 
+
+  cout << input_counter << "counterrrrrr\n";
+  //cout << cin.gcount() << "counterrruhuh\n";
+   
+return 0; 
 };
 
 void Plugboard::ASSIGN(const int letter) {
@@ -123,13 +124,14 @@ void Plugboard::SWITCH() {
 
 void Plugboard::UPLOAD_TO_OUTPUT_TEXT_FILE(const char *filename) {
 
-  ofstream out_stream;
-  out_stream.open(filename);
+  //ofstream out_stream;
+  //out_stream.open(filename);
 
   for (int i = 0; i < input_counter ; i++) {
     char output_letter = output_array[i] + 65;
-    out_stream.put(output_letter);
+    cout << output_letter;
+    //out_stream.put(output_letter);
   };
-
-  out_stream.close();
+  cout << "\n";
+  //  out_stream.close();
 };
