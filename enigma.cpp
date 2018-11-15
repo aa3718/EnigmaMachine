@@ -38,7 +38,6 @@ if (pb.INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS() == 6) {
  
  // Uploading input text file depending on argc length 
  pb.UPLOAD_VALUE();
- cout << pb.pass_value << " PB pass value\n";
  
  // Creating new instances of rotors
 
@@ -67,6 +66,7 @@ if (pb.INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS() == 6) {
 	  rotors[rot].UPLOAD_ROTOR_FILE_TO_ARRAY(argv[2 + (number_of_rotors - rot)]);
 	  rotors[rot].UPLOAD_ROTOR_POSITION_FILE_TO_ARRAY(argv[number_of_rotors + 3]);
 	  rotors[rot].ASSIGN(rot);
+	  cout << rotor[rot].first_position_array_index_rotor << " position";
 	};
 
 	if (rot == 0) {

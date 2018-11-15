@@ -45,7 +45,7 @@ void Rotor::UPLOAD_ROTOR_POSITION_FILE_TO_ARRAY(const char *filename) {
   };
 
   for (int i = 0; i < pos_counter ; i++) {
-    cout << pos_array[i];
+    cout << pos_array[i] << " POsition";
   };
   cout << "\n";
   
