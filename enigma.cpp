@@ -43,6 +43,7 @@ if (pb.INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS() == 6) {
 
   auto rotors = new Rotor[number_of_rotors];
 
+ // Rotor rotors[number_of_rotors];
  
   // For loop for each single input character
   for (int letter = 0; letter < (pb.input_counter) ; letter++) {
@@ -61,18 +62,18 @@ if (pb.INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS() == 6) {
 	} else {
 	  rotors[rot].pass_value = rotors[rot - 1].pass_value;
 	};
-
+	
 	if (letter == 0) {
 	  rotors[rot].UPLOAD_ROTOR_FILE_TO_ARRAY(argv[2 + (number_of_rotors - rot)]);
 	  rotors[rot].UPLOAD_ROTOR_POSITION_FILE_TO_ARRAY(argv[number_of_rotors + 3]);
 	  rotors[rot].ASSIGN(rot);
-	  cout << rotor[rot].first_position_array_index_rotor << " position";
+	  cout << rotors[rot].first_position_array_index_rotor << " position before begin\n";
 	};
 
 	if (rot == 0) {
 	  rotors[rot].CLICK();
 	};
-
+	
 	if (rot != 0 && rotors[rot - 1].at_notch == 1) {
 	  rotors[rot].CLICK();
 	  rotors[rot - 1].at_notch = 0;
@@ -80,6 +81,7 @@ if (pb.INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS() == 6) {
 
 	rotors[rot].GOING_THROUGH_ROTOR();
 	rotors[rot].REFRAME_FORWARD();
+	cout <<  rotors[rot].pass_value << "pass value after rotor refram\n";
       };
     };
 
@@ -118,7 +120,6 @@ if (pb.INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS() == 6) {
     if (number_of_rotors == 0) {
       pb.pass_value = rf.pass_value;
     } else {
-
       if (rf.pass_value + rotors[number_of_rotors - 1].rotation_counter > 25) {
 	rf.pass_value = (rf.pass_value + rotors[number_of_rotors - 1].rotation_counter) - 26;
       } else {
