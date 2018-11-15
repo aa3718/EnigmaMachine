@@ -22,6 +22,11 @@ int Plugboard::UPLOAD_PLUGBOARD(const char *filename) {
     in_stream >> a; 
   };
 
+  cout << "Plugboard\n";
+  for (int i = 0; i < pb_counter ; i++) {
+    cout << Array[i]<< " \n";
+  };
+  
   /*  if (!in_stream.eof() && !isdigit(a)) {
     cout << "There is a character\n";
     return 4;
@@ -84,11 +89,6 @@ int Plugboard::UPLOAD_VALUE() {
   
   //input_counter = cin.gcount();
   
-    for (int i = 0 ; i < input_counter ; i++) {
-      cout << input_array[i] << "\n";
-    }; 
-
-  cout << input_counter << "counterrrrrr\n";
   //cout << cin.gcount() << "counterrruhuh\n";
    
 return 0; 
@@ -122,7 +122,7 @@ void Plugboard::SWITCH() {
    };
 };
 
-void Plugboard::UPLOAD_TO_OUTPUT_TEXT_FILE(const char *filename) {
+void Plugboard::UPLOAD_TO_OUTPUT_TEXT_FILE() {
 
   //ofstream out_stream;
   //out_stream.open(filename);

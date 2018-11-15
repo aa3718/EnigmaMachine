@@ -13,8 +13,6 @@ using namespace std;
 
 
 int main(int argc, char **argv) {
-
-  cout << argc << "length\n";
   
   if (argc < 3) {
     cout << "INSUFFICIENT_NUMBER_OF_PARAMETERS: There are no files in the command line.\n";
