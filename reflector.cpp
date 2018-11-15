@@ -20,11 +20,6 @@ ifstream in_stream;
     rf_counter++;
     in_stream >> a;
   }; 
-
-cout << "Reflector\n";
-  for (int i = 0; i < rf_counter ; i++) {
-    cout << Array[i] << " \n";
-  };
   
    if (!in_stream.eof() && !isdigit(a)) {
      //    Value_NNC_rt = "True";

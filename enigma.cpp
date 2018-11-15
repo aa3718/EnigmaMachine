@@ -11,7 +11,9 @@ int Enigma::ENIGMA_START(int argc, char **argv) {
   } else {
     number_of_rotors = 0;
   };
- 
+
+  cout << number_of_rotors << " Number of rotors\n";
+  
  // Retutrning error value if there is an issue with plugboard file
  if (pb.UPLOAD_PLUGBOARD(argv[1]) == 4) {
    error_code = 4;
@@ -35,16 +37,21 @@ if (pb.INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS() == 6) {
 
  
  // Uploading input text file depending on argc length 
- pb.UPLOAD_VALUE();  
+ pb.UPLOAD_VALUE();
+ cout << pb.pass_value << " PB pass value\n";
  
  // Creating new instances of rotors
+
   auto rotors = new Rotor[number_of_rotors];
 
+ 
   // For loop for each single input character
   for (int letter = 0; letter < (pb.input_counter) ; letter++) {
 
     pb.ASSIGN((pb.input_array[letter]));
     pb.SWITCH();
+
+    cout << pb.pass_value << " PB pass value after switch\n";
 
     if (number_of_rotors != 0) {
 
@@ -106,6 +113,7 @@ if (pb.INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS() == 6) {
     };
 
     rf.SWITCH();
+    cout << rf.pass_value << " RF pass value after switch\n";
 
     if (number_of_rotors == 0) {
       pb.pass_value = rf.pass_value;
@@ -137,9 +145,8 @@ if (pb.INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS() == 6) {
       rotors[0].REVERSE_THROUGH_ROTOR();
 
       pb.pass_value = rotors[0].pass_value;
-      pb.SWITCH();
     };
-
+    pb.SWITCH();
     pb.output_array[letter] = pb.pass_value;
   };
 

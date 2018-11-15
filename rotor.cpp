@@ -20,11 +20,6 @@ ifstream in_stream;
     in_stream >> a;
   };
 
-cout << "Rotor\n";
-  for (int i = 0; i < rt_counter ; i++) {
-    cout << Array[i] << " \n";
-  };
-  
    if (!in_stream.eof() && !isdigit(a)) {
      //    Value_NNC_rt = "True";
   };
@@ -49,7 +44,11 @@ void Rotor::UPLOAD_ROTOR_POSITION_FILE_TO_ARRAY(const char *filename) {
     in_stream >> a;
   };
 
-
+  for (int i = 0; i < pos_counter ; i++) {
+    cout << pos_array[i];
+  };
+  cout << "\n";
+  
  if (!in_stream.eof() && !isdigit(a)) {
    //    Value_NNC_pos = "True";
    //   cout << "There is a character\n";

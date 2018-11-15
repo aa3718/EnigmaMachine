@@ -21,11 +21,6 @@ int Plugboard::UPLOAD_PLUGBOARD(const char *filename) {
     pb_counter++;
     in_stream >> a; 
   };
-
-  cout << "Plugboard\n";
-  for (int i = 0; i < pb_counter ; i++) {
-    cout << Array[i]<< " \n";
-  };
   
   /*  if (!in_stream.eof() && !isdigit(a)) {
     cout << "There is a character\n";
