@@ -110,17 +110,17 @@ int Rotor::POSITION_ERRORS(const int number_of_rotors) {
 
 void Rotor::ASSIGN(const int position) {
 
-  /*
-  for (int notch_index = length; notch_index < rt_counter; notch_index++) {
-    notch[notch_index] = Array[notch_index];
+  for (int notch_index = 26; notch_index < rt_counter; notch_index++) {
+    notch[notch_index - 26] = Array[notch_index];
+ 
   };
   
   for (int i = 0; i < (rt_counter - 26) ; i++) {
     cout << notch[i] << "notch \n";
   };
-  */
+ 
 
-  notch = Array[26];
+  // notch = Array[26];
   first_position_array_index_rotor = pos_array[position];
   rotation_counter = pos_array[position];
   at_notch = 0;
@@ -143,18 +143,18 @@ void Rotor::REFRAME_FORWARD() {
 };
 
 void Rotor::GOING_THROUGH_ROTOR() {
-
+  /*
 if (first_position_array_index_rotor == notch) {
     at_notch = 1;
   };
-  
-  /*
+  */
+ 
   for (int index = 0; index < (rt_counter - length) ; index++) {
     if (first_position_array_index_rotor == notch[index]) {
       at_notch = 1;
     };
   };
-  */  
+   
 
   if (rotation_counter > 25) {
     rotation_counter = 0;

@@ -14,7 +14,7 @@ class Rotor {
   const int length = 26;
   int Array[100];
   int rt_counter;
-  int notch;
+  int notch[100];
   int pos_array[30];
   int pos_counter;
   int pass_value;
