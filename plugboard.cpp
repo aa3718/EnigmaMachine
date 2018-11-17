@@ -85,7 +85,6 @@ return NO_ERROR;
 void Plugboard::ASSIGN(const int letter) {
 
   pass_value = letter;
-  //  cout << pass_value << "The first letter input\n";
 
 };
 

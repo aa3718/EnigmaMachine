@@ -15,7 +15,7 @@ int Enigma::ENIGMA_START(int argc, char **argv) {
     number_of_rotors = 0;
   };
 
-  cout << number_of_rotors << " Number of rotors\n";
+  cout << number_of_rotors << " Number of rotors\n"; ///////////////
   
  // Retutrning error value if there is an issue with plugboard file
 
@@ -37,24 +37,19 @@ int Enigma::ENIGMA_START(int argc, char **argv) {
   };
  
  // Creating new instances of rotors
-  
- 
-  
-  for (int number = 0; number < number_of_rotors ; number++) {
+  for (int number = 0; number < number_of_rotors; number++) {
     Rotor rotor;
     rotors.push_back(rotor);
   };
-  
-
- // Rotor rotors[number_of_rotors];
  
   // For loop for each single input character
-  for (int letter = 0; letter < (pb.input_counter) ; letter++) {
-
+  for (int letter = 0; letter < pb.input_counter; letter++) {
+    cout << pb.input_array[letter] << " input letter.\n"; ///////////
+    
     pb.ASSIGN((pb.input_array[letter]));
     pb.SWITCH();
 
-    cout << pb.pass_value << " PB pass value after switch\n";
+    cout << pb.pass_value << " After plugboard\n"; //////////////////
 
     if (number_of_rotors != 0) {
       
@@ -65,6 +60,8 @@ int Enigma::ENIGMA_START(int argc, char **argv) {
 	} else {
 	  rotors[rot].pass_value = rotors[rot - 1].pass_value;
 	};
+
+	cout << rotors[rot].pass_value << " Rotor pass value\n";
 	
 	if (letter == 0) {
 	  
@@ -89,7 +86,6 @@ int Enigma::ENIGMA_START(int argc, char **argv) {
 	    };
 	  
 	  rotors[rot].ASSIGN(number_of_rotors - 1 - rot);
-	  cout << rotors[rot].first_position_array_index_rotor << " position before begin\n";
 	};
 
 	if (rot == 0) {
@@ -99,15 +95,17 @@ int Enigma::ENIGMA_START(int argc, char **argv) {
 	if (rot != 0 && rotors[rot - 1].at_notch == 1) {
 	  rotors[rot].CLICK();
 	  rotors[rot - 1].at_notch = 0;
+	  cout << "clickckkkckckc of next rotor\n";
 	};
 
 	rotors[rot].GOING_THROUGH_ROTOR();
 	rotors[rot].REFRAME_FORWARD();
-	cout <<  rotors[rot].pass_value << "pass value after rotor refram\n";
+	cout <<  rotors[rot].pass_value << " pass value after rotor reframe\n";
       };
     };
 
 // Upload the reflector
+    if (letter == 0) {
       if (rf.UPLOAD_REFLECTOR(argv[2]) != 0) {
 	error_code = rf.UPLOAD_REFLECTOR(argv[2]);
 	return error_code;
@@ -117,6 +115,7 @@ int Enigma::ENIGMA_START(int argc, char **argv) {
 	error_code = rf.REFLECTOR_ERRORS();
 	return error_code;
       };
+    };
     
     if (number_of_rotors == 0) {
       rf.pass_value = pb.pass_value;
@@ -125,7 +124,6 @@ int Enigma::ENIGMA_START(int argc, char **argv) {
     };
 
     rf.SWITCH();
-    cout << rf.pass_value << " RF pass value after switch\n";
 
     if (number_of_rotors == 0) {
       pb.pass_value = rf.pass_value;
@@ -136,6 +134,7 @@ int Enigma::ENIGMA_START(int argc, char **argv) {
 	rf.pass_value = rf.pass_value + rotors[number_of_rotors - 1].rotation_counter;
       };
 
+      cout << rf.pass_value << " RF pass value after switch and reframe\n";
       rotors[number_of_rotors - 1].pass_value = rf.pass_value;
 
       if (number_of_rotors > 1) {
@@ -143,8 +142,7 @@ int Enigma::ENIGMA_START(int argc, char **argv) {
 	  rotors[rot].REVERSE_THROUGH_ROTOR();
 
 	  if (rotors[rot].pass_value + rotors[rot - 1].rotation_counter > 25) {
-	    rotors[rot].pass_value = (rotors[rot].pass_value + rotors[rot - 1].rotation_counter) - \
- 26;
+	    rotors[rot].pass_value = (rotors[rot].pass_value + rotors[rot - 1].rotation_counter) - 26;
 	  } else {
 	    rotors[rot].pass_value = rotors[rot].pass_value + rotors[rot - 1].rotation_counter;
 	  };
@@ -156,9 +154,11 @@ int Enigma::ENIGMA_START(int argc, char **argv) {
       rotors[0].REVERSE_THROUGH_ROTOR();
 
       pb.pass_value = rotors[0].pass_value;
+      cout << pb.pass_value << " Value going in PB \n";
     };
     pb.SWITCH();
     pb.output_array[letter] = pb.pass_value;
+    cout << pb.pass_value << " Final value.\n";
   };
 
   pb.UPLOAD_TO_OUTPUT_TEXT_FILE();

@@ -73,7 +73,6 @@ int Rotor::UPLOAD_ROTOR_POSITION_FILE_TO_ARRAY(const char *filename) {
   pos_counter = 0;
   
   in_stream >> a;
-
   while (! in_stream.fail()) {
     pos_array[pos_counter] = a;
     pos_counter++;
@@ -194,7 +193,7 @@ void Rotor::REVERSE_THROUGH_ROTOR() {
       if (i == first_position_array_index_rotor) {
 	pass_value = (first_position_array_index_rotor - i);
         return;
-      }
+      };
     };
   };
 };
