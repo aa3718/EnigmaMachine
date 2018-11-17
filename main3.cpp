@@ -55,7 +55,7 @@ int main(int argc, char **argv) {
      };
 
 	 if (enigma.error_code == 8) {
-     
+	   cout << "NO_ROTOR_STARTING_POSITION: There are not enough starting positions for your rotors.\n";
       return enigma.error_code;
      };
 

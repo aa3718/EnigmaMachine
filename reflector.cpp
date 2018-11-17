@@ -42,7 +42,7 @@ int Reflector::REFLECTOR_ERRORS() {
     
     // Check if not in bound
 
-    if (Array[value] < 0 || Array[value] > 26) {
+    if (Array[value] < 0 || Array[value] >= 26) {
     error_index = value;
     return INVALID_INDEX;
     };

@@ -40,7 +40,7 @@ int Rotor::ROTOR_ERRORS() {
     
     // Check if not in bound
 
-    if (Array[value] < 0 || Array[value] > length) {
+    if (Array[value] < 0 || Array[value] >= length) {
     error_index = value;
     return INVALID_INDEX;
     };
@@ -94,7 +94,7 @@ int Rotor::POSITION_ERRORS(const int number_of_rotors) {
     
     // Check if not in bound
 
-    if (pos_array[value] < 0 || pos_array[value] > length) {
+    if (pos_array[value] < 0 || pos_array[value] >= length) {
       error_index = value;
     return INVALID_INDEX;
     };

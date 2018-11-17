@@ -43,7 +43,7 @@ int Plugboard::PLUGBOARD_ERRORS() {
   for (int value = 0 ; value < pb_counter ; value++) {
     
     // Check if not in bound
-    if (Array[value] < 0 || Array[value] > 26) {
+    if (Array[value] < 0 || Array[value] >= 26) {
     error_index = value;
     return INVALID_INDEX;
     };
@@ -74,9 +74,13 @@ int Plugboard::UPLOAD_VALUE() {
 
   while ((integer = cin.get()) !=EOF) {
     cin >> ws;
+    if (integer > 64 && integer < 91) {
     integer = integer - 65;
     input_array[input_counter] = integer;
     input_counter++;
+    } else {
+      return INVALID_INPUT_CHARACTER;
+    };
   };
    
 return NO_ERROR; 
