@@ -1,4 +1,5 @@
 #include "plugboard.h"
+#include "errors.h"
 #include <iostream>
 #include <cmath>
 #include <fstream>
@@ -10,61 +11,60 @@ int Plugboard::UPLOAD_PLUGBOARD(const char *filename) {
 
  ifstream in_stream;
  in_stream.open(filename);
-
+ 
   pb_counter = 0;
   int a = 0;
   Value_NNC_pb = 0;
 
   in_stream >> a;
+
+  if (!in_stream.is_open()) {
+    return ERROR_OPENING_CONFIGURATION_FILE;
+  } else {  
   while (! in_stream.fail()) {
     Array[pb_counter] = a;
     pb_counter++;
     in_stream >> a; 
   };
+  };
   
-  /*  if (!in_stream.eof() && !isdigit(a)) {
-    cout << "There is a character\n";
-    return 4;
-    }; */
-    
+  if (in_stream.fail() && !in_stream.eof()) {
+    cout << "Plugboard\n";
+    return NON_NUMERIC_CHARACTER;
+  };
+  
   in_stream.close();
 
-    return 0;
+    return NO_ERROR;
 };
 
-int Plugboard::IMPOSSIBLE_PLUGBOARD_CONFIGURATION() {
-  
-for (int i = 0 ; i < pb_counter ; i++) {
-  for (int j = i+1; j < pb_counter ; j++) {
-    if (Array[i] == Array[j]) {
-      cout << "Error, duplicates present(PB)\n";
-      error_index_5= j;
-      return 5;
+int Plugboard::PLUGBOARD_ERRORS() {
+
+  for (int value = 0 ; value < pb_counter ; value++) {
+    
+    // Check if not in bound
+    if (Array[value] < 0 || Array[value] > 26) {
+    error_index = value;
+    return INVALID_INDEX;
     };
-  };
-  };
- return 0;  
-};
 
-int Plugboard::INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS() {
-
-  if (pb_counter % 2 == 0) {
-    return 0;
-  } else { 
-    cout << "Odd number of values(PB)\n";
-    return 6;
+    // Check if has a duplicate
+    if (value != 0) {
+      for (int previous = (value - 1) ; previous >= 0 ; previous--) {
+      
+      if (Array[value] == Array[previous]) {
+	error_index = previous;
+      return IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
   };
-};
-
-int Plugboard::INVALID_INDEX() {
-  
-for (int i = 0 ; i < pb_counter ; i++) {
-  if (Array[i] < 0 || Array[i] > 26) {
-    error_index_13 = i;
-    return 13;
+    };
+    };
+    
+  // Check if the right amount of values
+  if (pb_counter % 2 != 0) {
+    return INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS;
   };
- };
-  return 0;
+  };
+  return NO_ERROR;
 };
 
 int Plugboard::UPLOAD_VALUE() {
@@ -72,27 +72,20 @@ int Plugboard::UPLOAD_VALUE() {
   input_counter = 0;
   int integer = 0;
 
-  
   while ((integer = cin.get()) !=EOF) {
     cin >> ws;
     integer = integer - 65;
     input_array[input_counter] = integer;
     input_counter++;
   };
-
-  // input_counter = input_counter - 1;
-  
-  //input_counter = cin.gcount();
-  
-  //cout << cin.gcount() << "counterrruhuh\n";
    
-return 0; 
+return NO_ERROR; 
 };
 
 void Plugboard::ASSIGN(const int letter) {
 
   pass_value = letter;
-  cout << pass_value << "The first letter input\n";
+  //  cout << pass_value << "The first letter input\n";
 
 };
 
@@ -119,14 +112,9 @@ void Plugboard::SWITCH() {
 
 void Plugboard::UPLOAD_TO_OUTPUT_TEXT_FILE() {
 
-  //ofstream out_stream;
-  //out_stream.open(filename);
-
   for (int i = 0; i < input_counter ; i++) {
     char output_letter = output_array[i] + 65;
     cout << output_letter;
-    //out_stream.put(output_letter);
   };
   cout << "\n";
-  //  out_stream.close();
 };

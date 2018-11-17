@@ -2,6 +2,7 @@
 #include <string>
 #include <cmath>
 #include <cctype>
+#include <vector>
 
 #ifndef ROTOR_H
 #define ROTOR_H
@@ -10,6 +11,7 @@ using namespace std;
 
 class Rotor {
  public:
+  const int length = 26;
   int Array[27];
   int rt_counter;
   int notch;
@@ -19,8 +21,11 @@ class Rotor {
   int first_position_array_index_rotor;
   int rotation_counter;
   int at_notch;
-  void UPLOAD_ROTOR_FILE_TO_ARRAY(const char *filename);
-  void UPLOAD_ROTOR_POSITION_FILE_TO_ARRAY(const char *filename);
+  int error_index;
+  int UPLOAD_ROTOR_FILE_TO_ARRAY(const char *filename);
+  int ROTOR_ERRORS();
+  int UPLOAD_ROTOR_POSITION_FILE_TO_ARRAY(const char *filename);
+  int POSITION_ERRORS(const int number_of_rotors);
   void ASSIGN(const int position);
   void CLICK();
   void REFRAME_FORWARD();

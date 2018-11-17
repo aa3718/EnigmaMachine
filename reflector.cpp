@@ -1,4 +1,5 @@
 #include "reflector.h"
+#include "errors.h"
 #include <iostream>
 #include <cmath>
 #include <fstream>
@@ -7,29 +8,64 @@
 using namespace std;
 
 
-void Reflector::UPLOAD_REFLECTOR(const char *filename) {
+int Reflector::UPLOAD_REFLECTOR(const char *filename) {
 ifstream in_stream;
   in_stream.open(filename);
 
+
+ if (!in_stream.is_open()) {
+   return ERROR_OPENING_CONFIGURATION_FILE;
+ };
+  
   int a = 0;
   rf_counter = 0;
   
   in_stream >> a;
-  while (! in_stream.fail()) {
-    Array[rf_counter] = a;
-    rf_counter++;
-    in_stream >> a;
-  }; 
-  
-   if (!in_stream.eof() && !isdigit(a)) {
-     //    Value_NNC_rt = "True";
-     //   cout << "There is a character\n";
+    while (! in_stream.fail()) {
+      Array[rf_counter] = a;
+      rf_counter++;
+      in_stream >> a;
+    };
+
+  if (in_stream.fail() && !in_stream.eof()) {
+    cout << "Reflector\n";
+    return NON_NUMERIC_CHARACTER;
   };
 
-
   in_stream.close();
-
+  return NO_ERROR;
 };
+
+int Reflector::REFLECTOR_ERRORS() {
+
+ for (int value = 0 ; value < rf_counter ; value++) {
+    
+    // Check if not in bound
+
+    if (Array[value] < 0 || Array[value] > 26) {
+    error_index = value;
+    return INVALID_INDEX;
+    };
+
+    // Check if has a duplicate
+    if (value != 0)  {
+    for (int previous = (value - 1) ; previous >= 0 ; previous--) {
+      
+      if (Array[value] == Array[previous]) {
+	error_index = previous;
+      return INVALID_REFLECTOR_MAPPING;
+  };
+    };
+    };
+
+  // Check if the right amount of values
+  if (rf_counter != 26) {
+    return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
+  };
+ };
+ return 0;
+}; 
+
 
 void Reflector::SWITCH() {
  for (int array_index = 0; array_index < rf_counter; array_index++) { 
@@ -51,35 +87,3 @@ void Reflector::SWITCH() {
 
 };
 
-int Reflector::INVALID_REFLECTOR_MAPPING() {
-
-  for (int i = 0 ; i < rf_counter ; i++) {
-  for (int j = i+1; j < rf_counter ; j++) {
-    if (Array[i] == Array[j]) {
-       return 9;
-    };
-  };
-  };
-  
-   return 0;
-};
-
-int Reflector::INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS() {
-
-  if (rf_counter == 26) {
-     return 0;
-  } else {
-     return 10;
-  };
-};
-
-int Reflector::INVALID_INDEX() {
-
-for (int i = 0 ; i < rf_counter ; i++) {
-  if (Array[i] < 0 || Array[i] > 26) {
-    return 12;
-  };
- };
-  return 0;
-  
-};

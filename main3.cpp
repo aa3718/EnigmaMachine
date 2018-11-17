@@ -29,8 +29,13 @@ int main(int argc, char **argv) {
       return enigma.error_code;
      };
 
+   if (enigma.error_code == 3) {
+     cout << "INVALID_INDEX: Input out of bounds.\n";
+     return enigma.error_code;
+   };
+
      if (enigma.error_code == 4) {
-       cout << "  \n";
+       cout << "NON_NUMERIC_CHARACTER: There is an non numeric character in one of the file.\n";
       return enigma.error_code;
      };
 
@@ -45,7 +50,7 @@ int main(int argc, char **argv) {
      };
 
         if (enigma.error_code == 7) {
-	  cout << "INVALID_ROTOR_MAPPING:\n";  
+	  cout << "INVALID_ROTOR_MAPPING: There are duplicates in the rotor file.\n";  
       return enigma.error_code;
      };
 
@@ -68,17 +73,7 @@ int main(int argc, char **argv) {
 	    cout << "ERROR_OPENING_CONFIGURATION_FILE: Unable to open one of the files .\n";
       return enigma.error_code;
      };
+	    
 
-	   if (enigma.error_code == 12) {
-	     cout << "INVALID_INDEX: Some digit in the reflector file is out of bound.\n";
-      return 3;
-     };
-
-	    if (enigma.error_code == 13) {
-	      cout << "INVALID_INDEX: Some digit in the plugboard file is out of bound.\n";
-      return 3;
-     };
-
-	    cout << "NO_ERROR\n";
   return 0;
 };

@@ -1,4 +1,7 @@
 #include "enigma.h"
+#include "errors.h"
+#include <iostream>
+#include <vector>
 using namespace std;
 
 int Enigma::ENIGMA_START(int argc, char **argv) {
@@ -15,33 +18,33 @@ int Enigma::ENIGMA_START(int argc, char **argv) {
   cout << number_of_rotors << " Number of rotors\n";
   
  // Retutrning error value if there is an issue with plugboard file
- if (pb.UPLOAD_PLUGBOARD(argv[1]) == 4) {
-   error_code = 4;
-    return error_code;
- };
 
- if (pb.IMPOSSIBLE_PLUGBOARD_CONFIGURATION() == 5) {
-   error_code = 5;
+  if (pb.UPLOAD_PLUGBOARD(argv[1]) != 0) {
+   error_code = pb.UPLOAD_PLUGBOARD(argv[1]);
    return error_code;
- };
+  };
 
-  if (pb.INVALID_INDEX() == 13) {
-   error_code = 13;
-   return error_code;
- };
-
-if (pb.INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS() == 6) {
-   error_code = 6;
-   return error_code;
- };
+  if (pb.PLUGBOARD_ERRORS() != 0) {
+    error_code = pb.PLUGBOARD_ERRORS();
+      return error_code;
+    };
 
  
- // Uploading input text file depending on argc length 
- pb.UPLOAD_VALUE();
+ // Uploading input text file depending on argc length
+  if (pb.UPLOAD_VALUE() == INVALID_INPUT_CHARACTER) {
+    error_code = pb.UPLOAD_VALUE();
+    return error_code;
+  };
  
  // Creating new instances of rotors
-
-  auto rotors = new Rotor[number_of_rotors];
+  
+ 
+  
+  for (int number = 0; number < number_of_rotors ; number++) {
+    Rotor rotor;
+    rotors.push_back(rotor);
+  };
+  
 
  // Rotor rotors[number_of_rotors];
  
@@ -54,9 +57,9 @@ if (pb.INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS() == 6) {
     cout << pb.pass_value << " PB pass value after switch\n";
 
     if (number_of_rotors != 0) {
-
+      
       for (int rot = 0 ; rot < number_of_rotors; rot++) {
-
+	
 	if (rot == 0) {
 	  rotors[rot].pass_value = pb.pass_value;
 	} else {
@@ -64,8 +67,27 @@ if (pb.INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS() == 6) {
 	};
 	
 	if (letter == 0) {
-	  rotors[rot].UPLOAD_ROTOR_FILE_TO_ARRAY(argv[2 + (number_of_rotors - rot)]);
-	  rotors[rot].UPLOAD_ROTOR_POSITION_FILE_TO_ARRAY(argv[number_of_rotors + 3]);
+	  
+	  if (rotors[rot].UPLOAD_ROTOR_FILE_TO_ARRAY(argv[2 + (number_of_rotors - rot)])) {
+	    error_code = rotors[rot].UPLOAD_ROTOR_FILE_TO_ARRAY(argv[2 + (number_of_rotors - rot)]);
+	    return error_code;
+	  };
+	  
+	  if (rotors[rot].UPLOAD_ROTOR_POSITION_FILE_TO_ARRAY(argv[number_of_rotors + 3])) {
+	    error_code = rotors[rot].UPLOAD_ROTOR_POSITION_FILE_TO_ARRAY(argv[number_of_rotors + 3]);
+	    return error_code;
+	  };
+
+	  if (rotors[rot].ROTOR_ERRORS() != 0) {
+	    error_code = rotors[rot].ROTOR_ERRORS();
+	    return error_code;
+	  };
+
+	  if (rotors[rot].POSITION_ERRORS(number_of_rotors) != 0) {
+	      error_code = rotors[rot].POSITION_ERRORS(number_of_rotors);
+	      return error_code;
+	    };
+	  
 	  rotors[rot].ASSIGN(number_of_rotors - 1 - rot);
 	  cout << rotors[rot].first_position_array_index_rotor << " position before begin\n";
 	};
@@ -86,28 +108,16 @@ if (pb.INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS() == 6) {
     };
 
 // Upload the reflector
-    rf.UPLOAD_REFLECTOR(argv[2]);
+      if (rf.UPLOAD_REFLECTOR(argv[2]) != 0) {
+	error_code = rf.UPLOAD_REFLECTOR(argv[2]);
+	return error_code;
+      };
 
-    if (rf.INVALID_REFLECTOR_MAPPING() == 9) {
-      error_code = 9;
-      return error_code;
-    };
-
-     if (rf.INVALID_REFLECTOR_MAPPING() == 10) {
-      error_code = 10;
-      return error_code;
-    };
-
-    if (rf.INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS() == 8) {
-      error_code = 8;
-      return error_code;
-    };
-
-    if (rf.INVALID_INDEX() == 12) {
-      error_code = 12;
-      return error_code;
-    };
-
+      if (rf.REFLECTOR_ERRORS() != 0) {
+	error_code = rf.REFLECTOR_ERRORS();
+	return error_code;
+      };
+    
     if (number_of_rotors == 0) {
       rf.pass_value = pb.pass_value;
     } else {
@@ -155,4 +165,3 @@ if (pb.INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS() == 6) {
 
   return 0;
 };
-

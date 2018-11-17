@@ -5,9 +5,11 @@
 #include <fstream>
 #include <string>
 #include <cstdlib>
+#include <vector>
 #include "plugboard.h"
 #include "reflector.h"
 #include "rotor.h"
+#include "errors.h"
 
 
 class Enigma {
@@ -16,6 +18,7 @@ class Enigma {
   int error_code;
   Plugboard pb;
   Reflector rf;
+  std::vector<Rotor> rotors;
   int ENIGMA_START(int argc, char **argv); 
 };
 

@@ -13,12 +13,10 @@ class Reflector {
   int rf_counter;
   int Value_NNC_rf;
   int pass_value;
-  void UPLOAD_REFLECTOR(const char *filename);
+  int error_index;
+  int UPLOAD_REFLECTOR(const char *filename);
+  int REFLECTOR_ERRORS();
   void SWITCH();
-  int INVALID_REFLECTOR_MAPPING();
-  int INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS();
-  int INVALID_INDEX();
-
 };
 
 #endif
