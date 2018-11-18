@@ -73,8 +73,8 @@ int Plugboard::UPLOAD_VALUE() {
   int integer = 0;
 
   while ((integer = cin.get()) !=EOF) {
+   if (integer > 64 && integer < 91) {
     cin >> ws;
-    if (integer > 64 && integer < 91) {
     integer = integer - 65;
     input_array[input_counter] = integer;
     input_counter++;
