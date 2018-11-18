@@ -14,8 +14,14 @@ class Reflector {
   int Value_NNC_rf;
   int pass_value;
   int error_index;
+
+  // Uploads the reflector file values and inputs them into an array if numeric
   int UPLOAD_REFLECTOR(const char *filename);
+
+  // Goes through reflector values one by one and checks for error codes
   int REFLECTOR_ERRORS();
+
+  // Switches the input value to the paired reflector value
   void SWITCH();
 };
 

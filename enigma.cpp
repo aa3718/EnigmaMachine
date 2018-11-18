@@ -1,5 +1,4 @@
 #include "enigma.h"
-#include "errors.h"
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -10,24 +9,23 @@ int Enigma::ENIGMA_START(int argc, char **argv) {
 
   // Determining the number of rotors based on argc length
   if (argc > 3) {
-  number_of_rotors = argc - 4;
+    number_of_rotors = argc - 4;
   } else {
     number_of_rotors = 0;
   };
   
  // Retutrning error value if there is an issue with plugboard file
-
   if (pb.UPLOAD_PLUGBOARD(argv[1]) != 0) {
-   error_code = pb.UPLOAD_PLUGBOARD(argv[1]);
-   return error_code;
+    error_code = pb.UPLOAD_PLUGBOARD(argv[1]);
+    return error_code;
   };
 
   if (pb.PLUGBOARD_ERRORS() != 0) {
     error_code = pb.PLUGBOARD_ERRORS();
-      return error_code;
-    };
+    return error_code;
+  };
 
- // Creating new instances of rotors
+  // Creating new instances of rotors
   for (int number = 0; number < number_of_rotors; number++) {
     Rotor rotor;
     rotors.push_back(rotor);
@@ -60,18 +58,18 @@ int Enigma::ENIGMA_START(int argc, char **argv) {
       };
     };
 
-if (rf.UPLOAD_REFLECTOR(argv[2]) != 0) {
-	    error_code = rf.UPLOAD_REFLECTOR(argv[2]);
-	    return error_code;
- };
+  if (rf.UPLOAD_REFLECTOR(argv[2]) != 0) {
+    error_code = rf.UPLOAD_REFLECTOR(argv[2]);
+    return error_code;
+  };
 
-      if (rf.REFLECTOR_ERRORS() != 0) {
-	error_code = rf.REFLECTOR_ERRORS();
-	return error_code;
-      };
-      
- // Uploading input text file depending on argc length
-      pb.UPLOAD_VALUE();
+  if (rf.REFLECTOR_ERRORS() != 0) {
+    error_code = rf.REFLECTOR_ERRORS();
+    return error_code;
+  };
+
+  // Uploading input text file depending on argc length
+  pb.UPLOAD_VALUE();
  
   // For loop for each single input character
   for (int letter = 0; letter < pb.input_counter; letter++) {
@@ -142,22 +140,17 @@ if (rf.UPLOAD_REFLECTOR(argv[2]) != 0) {
       };
 
       rotors[0].REVERSE_THROUGH_ROTOR();
-
       pb.pass_value = rotors[0].pass_value;
-
     };
+
     pb.SWITCH();
     pb.output_array[letter] = pb.pass_value;
-
-  pb.UPLOAD_TO_OUTPUT_TEXT_FILE(letter);
-    
+    pb.UPLOAD_TO_OUTPUT_TEXT_FILE(letter);
   };
 
   if (error_code == INVALID_INPUT_CHARACTER) {
     return error_code;
   };
 
-  cout << "\n";
-  
   return 0;
 };

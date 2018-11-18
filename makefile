@@ -5,19 +5,19 @@ CXXFLAGS = -Wall -g
 $(EXE): main3.o plugboard.o reflector.o rotor.o enigma.o
 	$(CXX) -g main3.o plugboard.o reflector.o rotor.o enigma.o -o $(EXE)
 
-main3.o: main3.cpp reflector.h plugboard.h rotor.h enigma.h
+main3.o: main3.cpp 
 	$(CXX) $(CXXFLAGS) -c main3.cpp
 
-reflector.o: reflector.cpp reflector.h
+reflector.o: reflector.cpp 
 	$(CXX) $(CXXFLAGS) -c reflector.cpp
 
-plugboard.o: plugboard.cpp plugboard.h
+plugboard.o: plugboard.cpp 
 	$(CXX) $(CXXFLAGS) -c plugboard.cpp
 
-rotor.o: rotor.cpp rotor.h
+rotor.o: rotor.cpp 
 	$(CXX) $(CXXFLAGS) -c rotor.cpp
 
-enigma.o: enigma.cpp enigma.h
+enigma.o: enigma.cpp 
 	$(CXX) $(CXXFLAGS) -c enigma.cpp
 
 clean:

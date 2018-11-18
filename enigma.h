@@ -19,6 +19,8 @@ class Enigma {
   Plugboard pb;
   Reflector rf;
   std::vector<Rotor> rotors;
+
+  // Creates and runs enigma
   int ENIGMA_START(int argc, char **argv); 
 };
 

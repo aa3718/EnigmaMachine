@@ -8,12 +8,13 @@
 using namespace std;
 
 int Rotor::UPLOAD_ROTOR_FILE_TO_ARRAY(const char *filename) {
-ifstream in_stream;
+
+  ifstream in_stream;
   in_stream.open(filename);
 
- if (!in_stream.is_open()) {
-   return ERROR_OPENING_CONFIGURATION_FILE;
- };
+  if (!in_stream.is_open()) {
+    return ERROR_OPENING_CONFIGURATION_FILE;
+  };
   
   int a = 0;
   rt_counter = 0;
@@ -37,29 +38,27 @@ ifstream in_stream;
 int Rotor::ROTOR_ERRORS() {
 
   for (int value = 0 ; value < rt_counter ; value++) {
-    
+
     // Check if not in bound
     if (Array[value] < 0 || Array[value] >= length) {
-    error_index = value;
-    return INVALID_INDEX;
+      error_index = value;
+      return INVALID_INDEX;
     };
 
     // Check if has a duplicate
     if (value < length && value != 0) {
       for (int previous = (value - 1) ; previous >= 0 ; previous--) {
-      
-      if (Array[value] == Array[previous]) {
-	error_index = previous;
-      return INVALID_ROTOR_MAPPING;
-  };
-    };
+	if (Array[value] == Array[previous]) {
+	  error_index = previous;
+	  return INVALID_ROTOR_MAPPING;
+	};
+      };
     };
   };
 
   if (rt_counter < 26) {
     return INVALID_ROTOR_MAPPING;
   };
-  
   return NO_ERROR;
 };
 
@@ -68,9 +67,9 @@ int Rotor::UPLOAD_ROTOR_POSITION_FILE_TO_ARRAY(const char *filename) {
   ifstream in_stream;
   in_stream.open(filename);
 
- if (!in_stream.is_open()) {
-   return ERROR_OPENING_CONFIGURATION_FILE;
- };
+  if (!in_stream.is_open()) {
+    return ERROR_OPENING_CONFIGURATION_FILE;
+  };
   
   int a = 0;
   pos_counter = 0;
@@ -103,12 +102,12 @@ int Rotor::POSITION_ERRORS(const int number_of_rotors) {
     // Check if not in bound
     if (pos_array[value] < 0 || pos_array[value] >= length) {
       error_index = value;
-    return INVALID_INDEX;
+      return INVALID_INDEX;
     };
 
     // Check for the right amount of positions
     if (pos_counter < number_of_rotors) {
-    return NO_ROTOR_STARTING_POSITION; 
+      return NO_ROTOR_STARTING_POSITION; 
     };
 
   };
@@ -119,38 +118,35 @@ void Rotor::ASSIGN(const int position) {
 
   for (int notch_index = 26; notch_index < rt_counter; notch_index++) {
     notch[notch_index - 26] = Array[notch_index];
- 
   };
 
   first_position_array_index_rotor = pos_array[position];
   rotation_counter = pos_array[position];
   at_notch = 0;
-  
 };
 
 void Rotor:: CLICK() {
+  
   first_position_array_index_rotor++;
   rotation_counter++;
 };
 
 void Rotor::REFRAME_FORWARD() {
 
- if (pass_value - rotation_counter >= 0) {
-   pass_value = pass_value - rotation_counter;
- } else {
-   pass_value = 26 + (pass_value - rotation_counter);
- };
-
+  if (pass_value - rotation_counter >= 0) {
+    pass_value = pass_value - rotation_counter;
+  } else {
+    pass_value = 26 + (pass_value - rotation_counter);
+  };
 };
 
 void Rotor::GOING_THROUGH_ROTOR() {
- 
+
   for (int index = 0; index < (rt_counter - length) ; index++) {
     if (first_position_array_index_rotor == notch[index]) {
       at_notch = 1;
     };
   };
-   
 
   if (rotation_counter > 25) {
     rotation_counter = 0;
@@ -173,7 +169,6 @@ void Rotor::GOING_THROUGH_ROTOR() {
   };
 };
 
-
 void Rotor::REVERSE_THROUGH_ROTOR() {
 
   for (int i = 0 ; i < 26 ; i++) {
@@ -182,10 +177,12 @@ void Rotor::REVERSE_THROUGH_ROTOR() {
 	pass_value = (i - first_position_array_index_rotor);
 	return;
       };
+
       if (i < first_position_array_index_rotor) {
 	pass_value = (26 - (first_position_array_index_rotor - i));
 	return;
       };
+
       if (i == first_position_array_index_rotor) {
 	pass_value = (first_position_array_index_rotor - i);
         return;
