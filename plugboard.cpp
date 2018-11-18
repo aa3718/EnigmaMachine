@@ -73,14 +73,10 @@ int Plugboard::UPLOAD_VALUE() {
   int integer = 0;
 
   while ((integer = cin.get()) !=EOF) {
-   if (integer > 64 && integer < 91) {
     cin >> ws;
     integer = integer - 65;
     input_array[input_counter] = integer;
     input_counter++;
-    } else {
-      return INVALID_INPUT_CHARACTER;
-    };
   };
    
 return NO_ERROR; 
@@ -113,11 +109,9 @@ void Plugboard::SWITCH() {
    };
 };
 
-void Plugboard::UPLOAD_TO_OUTPUT_TEXT_FILE() {
-
-  for (int i = 0; i < input_counter ; i++) {
-    char output_letter = output_array[i] + 65;
+void Plugboard::UPLOAD_TO_OUTPUT_TEXT_FILE(int indexed) {
+    
+    char output_letter = output_array[indexed] + 65;
     cout << output_letter;
-  };
-  cout << "\n";
+
 };

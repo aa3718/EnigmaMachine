@@ -55,6 +55,10 @@ int Rotor::ROTOR_ERRORS() {
     };
     };
   };
+
+  if (rt_counter < 26) {
+    return INVALID_ROTOR_MAPPING;
+  };
   
   return NO_ERROR;
 };
@@ -117,18 +121,10 @@ void Rotor::ASSIGN(const int position) {
     notch[notch_index - 26] = Array[notch_index];
  
   };
-  
-  /*for (int i = 0; i < (rt_counter - 26) ; i++) {
-    cout << notch[i] << "notch \n";
-  };
-  */
 
-  // notch = Array[26];
   first_position_array_index_rotor = pos_array[position];
   rotation_counter = pos_array[position];
   at_notch = 0;
-
-  cout << "ERRORORO\n";////////////////////////////
   
 };
 
@@ -148,11 +144,6 @@ void Rotor::REFRAME_FORWARD() {
 };
 
 void Rotor::GOING_THROUGH_ROTOR() {
-  /*
-if (first_position_array_index_rotor == notch) {
-    at_notch = 1;
-  };
-  */
  
   for (int index = 0; index < (rt_counter - length) ; index++) {
     if (first_position_array_index_rotor == notch[index]) {

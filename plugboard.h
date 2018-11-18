@@ -22,7 +22,7 @@ public:
   int UPLOAD_VALUE();
   void ASSIGN(const int letter);
   void SWITCH();
-  void UPLOAD_TO_OUTPUT_TEXT_FILE();
+  void UPLOAD_TO_OUTPUT_TEXT_FILE(int indexed);
 };
 
 
