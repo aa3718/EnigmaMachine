@@ -65,7 +65,7 @@ int main(int argc, char **argv) {
      };
 
 	  if (enigma.error_code == 10) {
-	    cout << "INVALID_REFLECTOR_MAPPING: There are duplicates in the reflector file.\n";
+	    cout << "INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS: Wrong amount of elements in reflector.\n";
       return enigma.error_code;
      };
 

@@ -29,17 +29,53 @@ int Enigma::ENIGMA_START(int argc, char **argv) {
       return error_code;
     };
 
- 
- // Uploading input text file depending on argc length
-  if (pb.UPLOAD_VALUE() == INVALID_INPUT_CHARACTER) {
-    error_code = pb.UPLOAD_VALUE();
-    return error_code;
-  };
- 
  // Creating new instances of rotors
   for (int number = 0; number < number_of_rotors; number++) {
     Rotor rotor;
     rotors.push_back(rotor);
+  };
+
+  // Check all files for errors by uploading before implementation 
+  if (number_of_rotors != 0) {
+    for (int rot = 0 ; rot < number_of_rotors; rot++) {
+      if (rotors[rot].UPLOAD_ROTOR_FILE_TO_ARRAY(argv[2 + (number_of_rotors - rot)])) {
+	    error_code = rotors[rot].UPLOAD_ROTOR_FILE_TO_ARRAY(argv[2 + (number_of_rotors - rot)]);
+	    return error_code;
+	  };
+	  
+	  if (rotors[rot].UPLOAD_ROTOR_POSITION_FILE_TO_ARRAY(argv[number_of_rotors + 3])) {
+	    error_code = rotors[rot].UPLOAD_ROTOR_POSITION_FILE_TO_ARRAY(argv[number_of_rotors + 3]);
+	    return error_code;
+	  };
+
+	  if (rotors[rot].ROTOR_ERRORS() != 0) {
+	    error_code = rotors[rot].ROTOR_ERRORS();
+	    return error_code;
+	  };
+	  
+	  if (rotors[rot].POSITION_ERRORS(number_of_rotors) != 0) {
+	      error_code = rotors[rot].POSITION_ERRORS(number_of_rotors);
+	      return error_code;
+	    };
+	  
+	  rotors[rot].ASSIGN(number_of_rotors - 1 - rot);
+
+	  if (rf.UPLOAD_REFLECTOR(argv[2]) != 0) {
+	    error_code = rf.UPLOAD_REFLECTOR(argv[2]);
+	    return error_code;
+      };
+
+      if (rf.REFLECTOR_ERRORS() != 0) {
+	error_code = rf.REFLECTOR_ERRORS();
+	return error_code;
+      };
+  };
+  };
+  
+ // Uploading input text file depending on argc length
+  if (pb.UPLOAD_VALUE() == INVALID_INPUT_CHARACTER) {
+    error_code = pb.UPLOAD_VALUE();
+    return error_code;
   };
  
   // For loop for each single input character
@@ -62,7 +98,7 @@ int Enigma::ENIGMA_START(int argc, char **argv) {
 	};
 
 	cout << rotors[rot].pass_value << " Rotor pass value\n";
-	
+	/*
 	if (letter == 0) {
 	  
 	  if (rotors[rot].UPLOAD_ROTOR_FILE_TO_ARRAY(argv[2 + (number_of_rotors - rot)])) {
@@ -86,7 +122,9 @@ int Enigma::ENIGMA_START(int argc, char **argv) {
 	    };
 	  
 	  rotors[rot].ASSIGN(number_of_rotors - 1 - rot);
+	  cout << "HERE\n";
 	};
+	*/
 
 	if (rot == 0) {
 	  rotors[rot].CLICK();
@@ -95,7 +133,6 @@ int Enigma::ENIGMA_START(int argc, char **argv) {
 	if (rot != 0 && rotors[rot - 1].at_notch == 1) {
 	  rotors[rot].CLICK();
 	  rotors[rot - 1].at_notch = 0;
-	  cout << "clickckkkckckc of next rotor\n";
 	};
 
 	rotors[rot].GOING_THROUGH_ROTOR();
@@ -105,6 +142,7 @@ int Enigma::ENIGMA_START(int argc, char **argv) {
     };
 
 // Upload the reflector
+/*
     if (letter == 0) {
       if (rf.UPLOAD_REFLECTOR(argv[2]) != 0) {
 	error_code = rf.UPLOAD_REFLECTOR(argv[2]);
@@ -116,6 +154,7 @@ int Enigma::ENIGMA_START(int argc, char **argv) {
 	return error_code;
       };
     };
+*/
     
     if (number_of_rotors == 0) {
       rf.pass_value = pb.pass_value;

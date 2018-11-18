@@ -12,9 +12,9 @@ using namespace std;
 class Rotor {
  public:
   const int length = 26;
-  int Array[100];
+  int Array[80];
   int rt_counter;
-  int notch[100];
+  int notch[27];
   int pos_array[30];
   int pos_counter;
   int pass_value;

@@ -39,7 +39,6 @@ int Rotor::ROTOR_ERRORS() {
   for (int value = 0 ; value < rt_counter ; value++) {
     
     // Check if not in bound
-
     if (Array[value] < 0 || Array[value] >= length) {
     error_index = value;
     return INVALID_INDEX;
@@ -73,6 +72,11 @@ int Rotor::UPLOAD_ROTOR_POSITION_FILE_TO_ARRAY(const char *filename) {
   pos_counter = 0;
   
   in_stream >> a;
+
+  if (in_stream.eof()) {
+    return NO_ROTOR_STARTING_POSITION;
+  };
+  
   while (! in_stream.fail()) {
     pos_array[pos_counter] = a;
     pos_counter++;
@@ -91,9 +95,8 @@ int Rotor::UPLOAD_ROTOR_POSITION_FILE_TO_ARRAY(const char *filename) {
 int Rotor::POSITION_ERRORS(const int number_of_rotors) {
 
   for (int value = 0 ; value < pos_counter ; value++) {
-    
-    // Check if not in bound
 
+    // Check if not in bound
     if (pos_array[value] < 0 || pos_array[value] >= length) {
       error_index = value;
     return INVALID_INDEX;
@@ -115,15 +118,17 @@ void Rotor::ASSIGN(const int position) {
  
   };
   
-  for (int i = 0; i < (rt_counter - 26) ; i++) {
+  /*for (int i = 0; i < (rt_counter - 26) ; i++) {
     cout << notch[i] << "notch \n";
   };
- 
+  */
 
   // notch = Array[26];
   first_position_array_index_rotor = pos_array[position];
   rotation_counter = pos_array[position];
   at_notch = 0;
+
+  cout << "ERRORORO\n";////////////////////////////
   
 };
 
