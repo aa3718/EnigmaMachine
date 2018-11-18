@@ -61,11 +61,11 @@ int Enigma::ENIGMA_START(int argc, char **argv) {
 	  rotors[rot].ASSIGN(number_of_rotors - 1 - rot);
       };
     };
-  };
 
 if (rf.UPLOAD_REFLECTOR(argv[2]) != 0) {
 	    error_code = rf.UPLOAD_REFLECTOR(argv[2]);
 	    return error_code;
+ };
 
       if (rf.REFLECTOR_ERRORS() != 0) {
 	error_code = rf.REFLECTOR_ERRORS();
