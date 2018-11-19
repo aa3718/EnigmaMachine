@@ -23,7 +23,7 @@ int main(int argc, char **argv) {
   enigma.ENIGMA_START(argc, argv);
 
   if (enigma.error_code == INVALID_INPUT_CHARACTER) {
-    cout << "INVALID_INPUT_CHARACTER: Input is not a character.\n";
+    cout << "\nINVALID_INPUT_CHARACTER: Input is not a character.\n";
     return enigma.error_code;
   };
 
@@ -48,7 +48,8 @@ int main(int argc, char **argv) {
   };
 
   if (enigma.error_code == INVALID_ROTOR_MAPPING) {
-    cout << "INVALID_ROTOR_MAPPING: There are duplicates in the rotor file.\n";  
+    cout << "INVALID_ROTOR_MAPPING: There are duplicates in the rotor file.\n";
+    cout << "There is a duplicate at index " << enigma.error_index << ".\n";
     return enigma.error_code;
   };
 
