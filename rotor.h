@@ -11,7 +11,7 @@ using namespace std;
 
 class Rotor {
  public:
-  const int length = 26;
+  static const int alphabet = 26;
   int Array[80];
   int rt_counter;
   int notch[27];

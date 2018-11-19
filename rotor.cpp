@@ -40,13 +40,13 @@ int Rotor::ROTOR_ERRORS() {
   for (int value = 0 ; value < rt_counter ; value++) {
 
     // Check if not in bound
-    if (Array[value] < 0 || Array[value] >= length) {
+    if (Array[value] < 0 || Array[value] >= alphabet) {
       error_index = value;
       return INVALID_INDEX;
     };
 
     // Check if has a duplicate
-    if (value < length && value != 0) {
+    if (value < alphabet && value != 0) {
       for (int previous = (value - 1) ; previous >= 0 ; previous--) {
 	if (Array[value] == Array[previous]) {
 	  error_index = previous;
@@ -56,7 +56,7 @@ int Rotor::ROTOR_ERRORS() {
     };
   };
 
-  if (rt_counter < 26) {
+  if (rt_counter < alphabet) {
     return INVALID_ROTOR_MAPPING;
   };
   return NO_ERROR;
@@ -100,7 +100,7 @@ int Rotor::POSITION_ERRORS(const int number_of_rotors) {
   for (int value = 0 ; value < pos_counter ; value++) {
 
     // Check if not in bound
-    if (pos_array[value] < 0 || pos_array[value] >= length) {
+    if (pos_array[value] < 0 || pos_array[value] >= alphabet) {
       error_index = value;
       return INVALID_INDEX;
     };
@@ -116,8 +116,8 @@ int Rotor::POSITION_ERRORS(const int number_of_rotors) {
 
 void Rotor::ASSIGN(const int position) {
 
-  for (int notch_index = 26; notch_index < rt_counter; notch_index++) {
-    notch[notch_index - 26] = Array[notch_index];
+  for (int notch_index = alphabet; notch_index < rt_counter; notch_index++) {
+    notch[notch_index - alphabet] = Array[notch_index];
   };
 
   first_position_array_index_rotor = pos_array[position];
@@ -136,13 +136,13 @@ void Rotor::REFRAME_FORWARD() {
   if (pass_value - rotation_counter >= 0) {
     pass_value = pass_value - rotation_counter;
   } else {
-    pass_value = 26 + (pass_value - rotation_counter);
+    pass_value = alphabet + (pass_value - rotation_counter);
   };
 };
 
 void Rotor::GOING_THROUGH_ROTOR() {
 
-  for (int index = 0; index < (rt_counter - length) ; index++) {
+  for (int index = 0; index < (rt_counter - alphabet) ; index++) {
     if (first_position_array_index_rotor == notch[index]) {
       at_notch = 1;
     };
@@ -153,25 +153,25 @@ void Rotor::GOING_THROUGH_ROTOR() {
   };
   
   if (first_position_array_index_rotor > 25) {
-    first_position_array_index_rotor = first_position_array_index_rotor - 26;
+    first_position_array_index_rotor = first_position_array_index_rotor - alphabet;
   };
 
   int total = first_position_array_index_rotor + pass_value;
 
-  if ((first_position_array_index_rotor + pass_value) < 26) {
+  if ((first_position_array_index_rotor + pass_value) < alphabet) {
     pass_value = Array[first_position_array_index_rotor + pass_value];
     return;
   };
 
-  if ((first_position_array_index_rotor + pass_value) >= 26) {
-    pass_value = Array[(total - 26)];
+  if ((first_position_array_index_rotor + pass_value) >= alphabet) {
+    pass_value = Array[(total - alphabet)];
     return;
   };
 };
 
 void Rotor::REVERSE_THROUGH_ROTOR() {
 
-  for (int i = 0 ; i < 26 ; i++) {
+  for (int i = 0 ; i < alphabet ; i++) {
     if (pass_value == Array[i]) {
       if (i > first_position_array_index_rotor) {
 	pass_value = (i - first_position_array_index_rotor);
@@ -179,7 +179,7 @@ void Rotor::REVERSE_THROUGH_ROTOR() {
       };
 
       if (i < first_position_array_index_rotor) {
-	pass_value = (26 - (first_position_array_index_rotor - i));
+	pass_value = (alphabet - (first_position_array_index_rotor - i));
 	return;
       };
 

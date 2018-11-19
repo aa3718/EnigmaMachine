@@ -42,7 +42,7 @@ int Reflector::REFLECTOR_ERRORS() {
   for (int value = 0 ; value < rf_counter ; value++) {
 
     // Check if in bound
-    if (Array[value] < 0 || Array[value] >= 26) {
+    if (Array[value] < 0 || Array[value] >= alphabet) {
       error_index = value;
       return INVALID_INDEX;
     };
@@ -58,7 +58,7 @@ int Reflector::REFLECTOR_ERRORS() {
     };
 
     // Check if the right amount of values
-    if (rf_counter != 26) {
+    if (rf_counter != alphabet) {
       return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
     };
   };

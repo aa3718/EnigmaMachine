@@ -9,6 +9,7 @@ using namespace std;
 
 class Plugboard {
 public:
+  static const int alphabet = 26;
   int Array[27];
   int pb_counter;
   int input_array[100];

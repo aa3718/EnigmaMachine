@@ -41,7 +41,7 @@ int Plugboard::PLUGBOARD_ERRORS() {
   for (int value = 0 ; value < pb_counter ; value++) {
 
     // Check if value is out of bound
-    if (Array[value] < 0 || Array[value] >= 26) {
+    if (Array[value] < 0 || Array[value] >= alphabet) {
       error_index = value;
       return INVALID_INDEX;
     };

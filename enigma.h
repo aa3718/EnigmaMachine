@@ -14,6 +14,7 @@
 
 class Enigma {
  public:
+  static const int alphabet = 26;
   int number_of_rotors;
   int error_code;
   Plugboard pb;

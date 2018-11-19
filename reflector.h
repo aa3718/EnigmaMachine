@@ -9,6 +9,7 @@ using namespace std;
 
 class Reflector {
  public:
+  static const int alphabet = 26;
   int Array[27];
   int rf_counter;
   int Value_NNC_rf;
