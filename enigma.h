@@ -17,7 +17,6 @@ class Enigma {
   static const int alphabet = 26;
   int number_of_rotors;
   int error_code;
-  int error_index;
   Plugboard pb;
   Reflector rf;
   std::vector<Rotor> rotors;

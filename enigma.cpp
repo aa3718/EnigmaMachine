@@ -49,7 +49,7 @@ int Enigma::ENIGMA_START(int argc, char **argv) {
 	    return error_code;
 	  };
 	  
-	  if (rotors[rot].POSITION_ERRORS(number_of_rotors) != 0) {
+	  if (rotors[rot].POSITION_ERRORS(number_of_rotors) != NO_ERROR) {
 	      error_code = rotors[rot].POSITION_ERRORS(number_of_rotors);
 	      return error_code;
 	    };

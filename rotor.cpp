@@ -41,6 +41,7 @@ int Rotor::ROTOR_ERRORS() {
 
     // Check if not in bound
     if (Array[value] < 0 || Array[value] >= alphabet) {
+      cout << "Rotor error for value " << Array[value] << " at index " << value << ".\n";
       return INVALID_INDEX;
     };
 
@@ -48,7 +49,7 @@ int Rotor::ROTOR_ERRORS() {
     if (value < alphabet && value != 0) {
       for (int previous = (value - 1) ; previous >= 0 ; previous--) {
 	if (Array[value] == Array[previous]) {
-	  error_index = previous;
+	  cout << "Rotor error for value " << Array[value] << " at index " << value << ".\n";
 	  return INVALID_ROTOR_MAPPING;
 	};
       };
@@ -100,6 +101,7 @@ int Rotor::POSITION_ERRORS(const int number_of_rotors) {
 
     // Check if not in bound
     if (pos_array[value] < 0 || pos_array[value] >= alphabet) {
+      cout << "Position error for value " << pos_array[value] << " at index " << value << ".\n";   
       return INVALID_INDEX;
     };
 

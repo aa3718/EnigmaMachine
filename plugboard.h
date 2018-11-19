@@ -16,7 +16,6 @@ public:
   int input_counter;
   int pass_value;
   int output_array[27];
-  int error_index;
   
   // Uploads the plugboard file values and inputs them into an array if numeric
   int UPLOAD_PLUGBOARD(const char *filename);

@@ -43,7 +43,7 @@ int Reflector::REFLECTOR_ERRORS() {
 
     // Check if in bound
     if (Array[value] < 0 || Array[value] >= alphabet) {
-      error_index = value;
+      cout << "Reflector invalid value at index " << value << ".\n";
       return INVALID_INDEX;
     };
 
@@ -51,7 +51,7 @@ int Reflector::REFLECTOR_ERRORS() {
     if (value != 0)  {
       for (int previous = (value - 1) ; previous >= 0 ; previous--) {
 	if (Array[value] == Array[previous]) {
-	  error_index = previous;
+	  cout << "Reflector error for value " << Array[value] << " at index " << value << ".\n";
 	  return INVALID_REFLECTOR_MAPPING;
 	};
       };

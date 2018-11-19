@@ -42,7 +42,7 @@ int Plugboard::PLUGBOARD_ERRORS() {
 
     // Check if value is out of bound
     if (Array[value] < 0 || Array[value] >= alphabet) {
-      error_index = value;
+      cout << "Plugboard invalid value at index " << value << ".\n";
       return INVALID_INDEX;
     };
 
@@ -50,7 +50,7 @@ int Plugboard::PLUGBOARD_ERRORS() {
     if (value != 0) {
       for (int previous = (value - 1) ; previous >= 0 ; previous--) {
 	if (Array[value] == Array[previous]) {
-	  error_index = previous;
+	  cout << "Plugboard error for value " << Array[value] << " at index " << value << ".\n";
 	  return IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
 	};
       };

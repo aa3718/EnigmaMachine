@@ -49,7 +49,6 @@ int main(int argc, char **argv) {
 
   if (enigma.error_code == INVALID_ROTOR_MAPPING) {
     cout << "INVALID_ROTOR_MAPPING: There are duplicates in the rotor file.\n";
-    cout << "There is a duplicate at index " << enigma.error_index << ".\n";
     return enigma.error_code;
   };
 

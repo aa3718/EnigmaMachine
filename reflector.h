@@ -12,9 +12,7 @@ class Reflector {
   static const int alphabet = 26;
   int Array[27];
   int rf_counter;
-  int Value_NNC_rf;
   int pass_value;
-  int error_index;
 
   // Uploads the reflector file values and inputs them into an array if numeric
   int UPLOAD_REFLECTOR(const char *filename);
