@@ -57,6 +57,7 @@ int Rotor::ROTOR_ERRORS() {
   };
 
   if (rt_counter < alphabet) {
+    cout << "Not all inputs mapped in rotor file.\n";
     return INVALID_ROTOR_MAPPING;
   };
   return NO_ERROR;
